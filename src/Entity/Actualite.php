@@ -57,7 +57,7 @@ class Actualite
 
     public function __construct()
     {
-        $this->updateAt = new \DateTimeImmutable();
+        $this->updatedat = new \DateTimeImmutable();
     }
     public function __toString()
     {
