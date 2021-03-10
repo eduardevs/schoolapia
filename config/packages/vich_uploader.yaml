@@ -1,0 +1,14 @@
+parameters:
+    app.path.upload_image: /upload/images
+vich_uploader:
+    db_driver: orm
+    mappings:
+        image_upload:
+            uri_prefix: '%app.path.upload_image%'
+            upload_destination: '%kernel.project_dir%/public/upload/images'
+            inject_on_load:    true
+            # Les propriétés delete_on_update et delete_on_remove prennent en charge la suppression de l'image dans le cas d'un changement d'image à l'update l'ancienne image est supprimée
+            delete_on_update:  true
+            delete_on_remove:  true
+            # Vichuploaderp rend en charge le renommage automatique avec namer
+            namer: vich_uploader.namer_origname
