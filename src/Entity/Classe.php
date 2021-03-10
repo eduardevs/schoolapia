@@ -20,7 +20,7 @@ class Classe
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $nom_classe;
+    private $nomClasse;
 
     public function getId(): ?int
     {
@@ -29,12 +29,12 @@ class Classe
 
     public function getNomClasse(): ?string
     {
-        return $this->nom_classe;
+        return $this->nomClasse;
     }
 
-    public function setNomClasse(string $nom_classe): self
+    public function setNomClasse(string $nomClasse): self
     {
-        $this->nom_classe = $nom_classe;
+        $this->nomClasse = $nomClasse;
 
         return $this;
     }
