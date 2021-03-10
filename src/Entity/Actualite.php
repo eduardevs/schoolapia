@@ -52,12 +52,12 @@ class Actualite
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedat;
+    private $updatedAt;
 
 
     public function __construct()
     {
-        $this->updatedat = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
     public function __toString()
     {
@@ -127,7 +127,7 @@ class Actualite
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updateAt = new \DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
@@ -136,14 +136,14 @@ class Actualite
         return $this->imageFile;
     }
 
-    public function getUpdatedat(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedat;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedat(\DateTimeInterface $updatedat): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedat = $updatedat;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
