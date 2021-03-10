@@ -1,0 +1,8 @@
+easy_admin:
+  site_name: 'Projet_Ecole'
+  formats:
+    date: d/m/Y
+  design:
+    brand_color: '#ff0000'
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
