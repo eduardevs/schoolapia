@@ -45,6 +45,14 @@ class Classe
         $this->utilisateurs = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        if (is_null($this->nomClasse)) {
+            return "";
+        }
+        return $this->nomClasse;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

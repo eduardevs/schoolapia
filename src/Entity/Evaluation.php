@@ -20,7 +20,7 @@ class Evaluation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=matiere::class, inversedBy="evaluations")
+     * @ORM\ManyToOne(targetEntity=Matiere::class, inversedBy="evaluations")
      */
     private $matiere;
 

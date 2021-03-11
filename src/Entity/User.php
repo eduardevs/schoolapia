@@ -114,6 +114,13 @@ class User implements UserInterface
         $this->receveurs = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        if(is_null($this->roles)){
+            return "";
+        }
+        return $this->roles;
+    }
 
     public function getId(): ?int
     {

@@ -40,7 +40,7 @@ class EmploiDuTemps
     private $classes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=matiere::class, inversedBy="emploiDuTemps")
+     * @ORM\ManyToMany(targetEntity=Matiere::class, inversedBy="emploiDuTemps")
      */
     private $matiere;
 
