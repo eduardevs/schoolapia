@@ -1,8 +1,105 @@
 easy_admin:
-  site_name: 'Projet_Ecole'
+  site_name: "Schoolapia"
   formats:
     date: d/m/Y
   design:
-    brand_color: '#ff0000'
+    brand_color: "#ff0000"
     form_theme:
-      - '@EasyAdmin/form/bootstrap_4.html.twig'
+      - "@EasyAdmin/form/bootstrap_4.html.twig"
+      - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+    menu:
+      -
+        label: Home
+        icon: home
+        children:
+          - { entity: Établissement, icon: building }
+          - { entity: Carousel, icon: picture-o }
+      - 
+        label: Actualités
+        icon: newspaper-o
+        entity: Actualite
+        # label: Scolarité
+        # icon: briefcase
+        # children:
+        #   - {  entity: Note, icon:  }
+        #   - {  entity: Evaluation, icon:  }
+        # label: Vie Scolaire
+        # icon: dog
+        # entity: Vie Scolaire
+      # - 
+      #   label: Utilisateur
+      #   icon: users 
+      #   entity: Utilisateur
+  entities:
+    Établissement:
+      class: App\Entity\Etablissement
+      list:
+        fields:
+          - {  property: nomEtablissement  }
+          - {  property: image, type: image, base_path: '%app.path.upload_image%'  }
+          - {  property: ville   }
+          - {  property: codePostal  }
+      form:
+        fields:
+          - {  type: group, label: 'Contents', icon: pencil  }
+          - {  property: nomEtablissement  }
+          - {  property: adresse  }
+          - {  property: codePostal  }
+          - {  property: ville  }
+          - {  property: imageFile, type: vich_image  }
+    Carousel:
+      class: App\Entity\Carousel
+      list:
+        fields:
+          - {  property: active  }
+        # futur relation
+      form:
+        fields:
+          - { type: group, label: "Settings", icon: cog }
+          - {  property: active  }
+        # futur relation
+    Actualite:
+      class: App\Entity\Actualite
+      list:
+        fields:
+          - {  property: titre  }
+          - {  property: soustitre   }
+          - {  property: image, type: image, base_path: '%app.path.upload_image%'  }
+      form:
+        fields:
+          - {  type: group, label: 'Contents', icon: pencil  }
+          - {  property: titre  }
+          - {  property: soustitre  }
+          - {  property: texte, type: 'fos_ckeditor'  }
+          - {  property: imageFile, type: vich_image  }
+    # Utilisateur:
+    #   class: App\Entity\Utilisateur
+    #   list:
+    #     fields:
+    #       - {  property: role  }
+    #       - {  property: nomUtilisateur  }
+    #       - {  property: nom   }
+    #       - {  property: prenom  }
+    #       - {  property: dateNaissance }
+    #       - {  property: email  }
+    #       - {  property: telephone  }
+    #       - { property: roles, type:ChoiceType::class, type_optionss={ choices: ["user"=>"ROLE_USER", "admin"=>"ROLE_ADMIN"]}}
+    #   form:
+    #     fields:
+    #       - {  property: role }
+    #       - {  property: nomUtilisateur   }
+    #       - {  property: nom  }
+    #       - {  property: prenom }
+    #       - {  property: email  }
+    #       - {  property: telephone  }
+    #       - {  property: dateNaissance, type: birthday }
+    #       - {  property: adresse  }
+    #       - {  property: codePostal  }
+    #       - {  property: ville  }
+  # - App\Entity\Classe
+  # - App\Entity\Discussion
+  # - App\Entity\EmploiDuTemps
+  # - App\Entity\Matiere
+  # - App\Entity\Note
+  # - App\Entity\Message
+
