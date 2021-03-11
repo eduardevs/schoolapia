@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\DiscussionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DiscussionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=DiscussionRepository::class)
@@ -25,14 +26,14 @@ class Discussion
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=utilisateur::class, inversedBy="discussions")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="discussions")
      */
-    private $utilisateurs;
+    private $Users;
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->utilisateurs = new ArrayCollection();
+        $this->Users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,25 +72,25 @@ class Discussion
     }
 
     /**
-     * @return Collection|utilisateur[]
+     * @return Collection|User[]
      */
-    public function getUtilisateurs(): Collection
+    public function getUsers(): Collection
     {
-        return $this->utilisateurs;
+        return $this->Users;
     }
 
-    public function addUtilisateur(utilisateur $utilisateur): self
+    public function addUser(User $User): self
     {
-        if (!$this->utilisateurs->contains($utilisateur)) {
-            $this->utilisateurs[] = $utilisateur;
+        if (!$this->Users->contains($User)) {
+            $this->Users[] = $User;
         }
 
         return $this;
     }
 
-    public function removeUtilisateur(utilisateur $utilisateur): self
+    public function removeUser(User $User): self
     {
-        $this->utilisateurs->removeElement($utilisateur);
+        $this->Users->removeElement($User);
 
         return $this;
     }

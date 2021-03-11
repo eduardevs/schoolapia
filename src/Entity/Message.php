@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MessageRepository;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -43,12 +44,12 @@ class Message
     private $discussions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="envoyeurs")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="envoyeurs")
      */
     private $envoyeur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="receveurs")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receveurs")
      */
     private $receveur;
 
@@ -117,24 +118,24 @@ class Message
         return $this;
     }
 
-    public function getEnvoyeur(): ?utilisateur
+    public function getEnvoyeur(): ?User
     {
         return $this->envoyeur;
     }
 
-    public function setEnvoyeur(?utilisateur $envoyeur): self
+    public function setEnvoyeur(?User $envoyeur): self
     {
         $this->envoyeur = $envoyeur;
 
         return $this;
     }
 
-    public function getReceveur(): ?utilisateur
+    public function getReceveur(): ?User
     {
         return $this->receveur;
     }
 
-    public function setReceveur(?utilisateur $receveur): self
+    public function setReceveur(?User $receveur): self
     {
         $this->receveur = $receveur;
 

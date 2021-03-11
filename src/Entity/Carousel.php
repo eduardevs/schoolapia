@@ -26,7 +26,7 @@ class Carousel
     private $active;
 
     /**
-     * @ORM\OneToMany(targetEntity=actualite::class, mappedBy="carousels")
+     * @ORM\OneToMany(targetEntity=Actualite::class, mappedBy="carousels")
      */
     private $actualites;
 

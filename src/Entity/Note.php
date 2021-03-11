@@ -33,7 +33,7 @@ class Note
     private $evaluations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="notes")
      */
     private $utilisateurs;
 
@@ -78,12 +78,12 @@ class Note
         return $this;
     }
 
-    public function getUtilisateurs(): ?utilisateur
+    public function getUtilisateurs(): ?User
     {
         return $this->utilisateurs;
     }
 
-    public function setUtilisateurs(?utilisateur $utilisateurs): self
+    public function setUtilisateurs(?User $utilisateurs): self
     {
         $this->utilisateurs = $utilisateurs;
 

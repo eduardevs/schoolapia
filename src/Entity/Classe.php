@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ClasseRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ClasseRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ClasseRepository::class)
@@ -35,7 +36,7 @@ class Classe
     private $EmploiDuTemps;
 
     /**
-     * @ORM\OneToMany(targetEntity=utilisateur::class, mappedBy="classes")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="classes")
      */
     private $utilisateurs;
 
@@ -86,14 +87,14 @@ class Classe
     }
 
     /**
-     * @return Collection|utilisateur[]
+     * @return Collection|User[]
      */
     public function getUtilisateurs(): Collection
     {
         return $this->utilisateurs;
     }
 
-    public function addUtilisateur(utilisateur $utilisateur): self
+    public function addUtilisateur(User $utilisateur): self
     {
         if (!$this->utilisateurs->contains($utilisateur)) {
             $this->utilisateurs[] = $utilisateur;
@@ -103,7 +104,7 @@ class Classe
         return $this;
     }
 
-    public function removeUtilisateur(utilisateur $utilisateur): self
+    public function removeUtilisateur(User $utilisateur): self
     {
         if ($this->utilisateurs->removeElement($utilisateur)) {
             // set the owning side to null (unless already changed)
