@@ -36,7 +36,7 @@ class Actualite
     private $texte;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $image;
 
@@ -53,6 +53,11 @@ class Actualite
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Carousel::class, inversedBy="actualites")
+     */
+    private $carousels;
 
 
     public function __construct()
@@ -144,6 +149,18 @@ class Actualite
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCarousels(): ?Carousel
+    {
+        return $this->carousels;
+    }
+
+    public function setCarousels(?Carousel $carousels): self
+    {
+        $this->carousels = $carousels;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmploiDuTempsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,21 @@ class EmploiDuTemps
      * @ORM\Column(type="datetime")
      */
     private $jour;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Classe::class, mappedBy="EmploiDuTemps", cascade={"persist", "remove"})
+     */
+    private $classes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=matiere::class, inversedBy="emploiDuTemps")
+     */
+    private $matiere;
+
+    public function __construct()
+    {
+        $this->matiere = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +86,52 @@ class EmploiDuTemps
     public function setJour(\DateTimeInterface $jour): self
     {
         $this->jour = $jour;
+
+        return $this;
+    }
+
+    public function getClasses(): ?Classe
+    {
+        return $this->classes;
+    }
+
+    public function setClasses(?Classe $classes): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($classes === null && $this->classes !== null) {
+            $this->classes->setEmploiDuTemps(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($classes !== null && $classes->getEmploiDuTemps() !== $this) {
+            $classes->setEmploiDuTemps($this);
+        }
+
+        $this->classes = $classes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|matiere[]
+     */
+    public function getMatiere(): Collection
+    {
+        return $this->matiere;
+    }
+
+    public function addMatiere(matiere $matiere): self
+    {
+        if (!$this->matiere->contains($matiere)) {
+            $this->matiere[] = $matiere;
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(matiere $matiere): self
+    {
+        $this->matiere->removeElement($matiere);
 
         return $this;
     }

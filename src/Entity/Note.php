@@ -27,6 +27,16 @@ class Note
      */
     private $appreciations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Evaluation::class, inversedBy="note")
+     */
+    private $evaluations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="notes")
+     */
+    private $utilisateurs;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Note
     public function setAppreciations(?string $appreciations): self
     {
         $this->appreciations = $appreciations;
+
+        return $this;
+    }
+
+    public function getEvaluations(): ?Evaluation
+    {
+        return $this->evaluations;
+    }
+
+    public function setEvaluations(?Evaluation $evaluations): self
+    {
+        $this->evaluations = $evaluations;
+
+        return $this;
+    }
+
+    public function getUtilisateurs(): ?utilisateur
+    {
+        return $this->utilisateurs;
+    }
+
+    public function setUtilisateurs(?utilisateur $utilisateurs): self
+    {
+        $this->utilisateurs = $utilisateurs;
 
         return $this;
     }

@@ -37,6 +37,21 @@ class Message
      */
     private $pieceJointe;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Discussion::class, inversedBy="messages")
+     */
+    private $discussions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="envoyeurs")
+     */
+    private $envoyeur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=utilisateur::class, inversedBy="receveurs")
+     */
+    private $receveur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +101,42 @@ class Message
     public function setPieceJointe(?string $pieceJointe): self
     {
         $this->pieceJointe = $pieceJointe;
+
+        return $this;
+    }
+
+    public function getDiscussions(): ?Discussion
+    {
+        return $this->discussions;
+    }
+
+    public function setDiscussions(?Discussion $discussions): self
+    {
+        $this->discussions = $discussions;
+
+        return $this;
+    }
+
+    public function getEnvoyeur(): ?utilisateur
+    {
+        return $this->envoyeur;
+    }
+
+    public function setEnvoyeur(?utilisateur $envoyeur): self
+    {
+        $this->envoyeur = $envoyeur;
+
+        return $this;
+    }
+
+    public function getReceveur(): ?utilisateur
+    {
+        return $this->receveur;
+    }
+
+    public function setReceveur(?utilisateur $receveur): self
+    {
+        $this->receveur = $receveur;
 
         return $this;
     }

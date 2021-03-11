@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EtablissementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -59,9 +61,15 @@ class Etablissement
      */
     private $ville;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Classe::class, mappedBy="etablissement")
+     */
+    private $classes;
+
     public function __construct()
     {
         $this->updatedAt = new \DateTimeImmutable();
+        $this->classes = new ArrayCollection();
     }
     public function __toString()
     {
@@ -90,7 +98,7 @@ class Etablissement
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage($image): self
     {
         $this->image = $image;
 
@@ -157,6 +165,36 @@ class Etablissement
     public function setVille(string $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Classe[]
+     */
+    public function getClasses(): Collection
+    {
+        return $this->classes;
+    }
+
+    public function addClass(Classe $class): self
+    {
+        if (!$this->classes->contains($class)) {
+            $this->classes[] = $class;
+            $class->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClass(Classe $class): self
+    {
+        if ($this->classes->removeElement($class)) {
+            // set the owning side to null (unless already changed)
+            if ($class->getEtablissement() === $this) {
+                $class->setEtablissement(null);
+            }
+        }
 
         return $this;
     }
