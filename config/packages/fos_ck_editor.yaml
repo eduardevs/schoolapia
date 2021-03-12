@@ -1,0 +1,10 @@
+fos_ck_editor:
+    configs:
+        my_config:
+            toolbar:
+                - { name: "actions", items: ["Undo", "Redo", "RemoveFormat"]}
+                - { name: "styles", items: ['Bold', 'Italic', 'Underline', "Strike", 'Link'] }
+                - { name: "format", items: ["Font", "Styles", "Format", "FontSize"] }
+                - { name: "colors", items: ["TextColor", "BGColor"] }
+                - { name: "formatting", items: ['BulletedList', "NumberedList", "Outdent", "Indent", "Blockquote"]}
+                - { name: "alignements", items: ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"] }

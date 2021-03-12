@@ -12,26 +12,29 @@ easy_admin:
         label: Home
         icon: home
         children:
-          - { entity: Établissement, icon: building }
+          - { entity: Etablissement, icon: university }
           - { entity: Carousel, icon: picture-o }
       - 
         label: Actualités
         icon: newspaper-o
         entity: Actualite
-        # label: Scolarité
-        # icon: briefcase
-        # children:
-        #   - {  entity: Note, icon:  }
-        #   - {  entity: Evaluation, icon:  }
-        # label: Vie Scolaire
-        # icon: dog
-        # entity: Vie Scolaire
-      # - 
-      #   label: Utilisateur
-      #   icon: users 
-      #   entity: Utilisateur
+      - 
+        label: Utilisateur
+        icon: users 
+        entity: Utilisateur
+      - 
+        label: Classe
+        icon: inbox
+        entity: Classe
+      - 
+        label: Création d'un planning
+        icon: graduation-cap
+        children:
+          - {  entity: Horaire, icon: clock-o }
+          - {  entity: Matiere, icon: folder  }
+          - {  entity: EmploiDuTemps, label: Emploi du Temps, icon: calendar-check-o  }
   entities:
-    Établissement:
+    Etablissement:
       class: App\Entity\Etablissement
       list:
         fields:
@@ -52,12 +55,12 @@ easy_admin:
       list:
         fields:
           - {  property: active  }
-        # futur relation
+          - {  property: actualites  }
       form:
         fields:
-          - { type: group, label: "Settings", icon: cog }
+          - {  type: group, label: "Settings", icon: cog }
           - {  property: active  }
-        # futur relation
+          - {  property: actualites, type_options: {by_reference: false}  }
     Actualite:
       class: App\Entity\Actualite
       list:
@@ -72,34 +75,72 @@ easy_admin:
           - {  property: soustitre  }
           - {  property: texte, type: 'fos_ckeditor'  }
           - {  property: imageFile, type: vich_image  }
-    # Utilisateur:
-    #   class: App\Entity\Utilisateur
-    #   list:
-    #     fields:
-    #       - {  property: role  }
-    #       - {  property: nomUtilisateur  }
-    #       - {  property: nom   }
-    #       - {  property: prenom  }
-    #       - {  property: dateNaissance }
-    #       - {  property: email  }
-    #       - {  property: telephone  }
-    #       - { property: roles, type:ChoiceType::class, type_optionss={ choices: ["user"=>"ROLE_USER", "admin"=>"ROLE_ADMIN"]}}
-    #   form:
-    #     fields:
-    #       - {  property: role }
-    #       - {  property: nomUtilisateur   }
-    #       - {  property: nom  }
-    #       - {  property: prenom }
-    #       - {  property: email  }
-    #       - {  property: telephone  }
-    #       - {  property: dateNaissance, type: birthday }
-    #       - {  property: adresse  }
-    #       - {  property: codePostal  }
-    #       - {  property: ville  }
-  # - App\Entity\Classe
-  # - App\Entity\Discussion
-  # - App\Entity\EmploiDuTemps
-  # - App\Entity\Matiere
-  # - App\Entity\Note
-  # - App\Entity\Message
-
+    Utilisateur:
+      class: App\Entity\User
+      list:
+        fields:
+          - {  property: roleDisplay, label: "Rôle"  }
+          - {  property: username, label: 'Identifiant'  }
+          - {  property: nom   }
+          - {  property: prenom  }
+          - {  property: dateNaissance }
+          - {  property: email  }
+          - {  property: telephone  }
+      form:
+        fields:
+          - {  property: roles, label: Rôles, type: choice, type_options: { expanded: true, multiple: true, choices: { Professeur: ROLE_ADMIN, Eleve: ROLE_USER, Parents: ROLE_USER, Super Administrateur: ROLE_SUPER_ADMIN } } }
+          - {  property: username  }
+          - {  property: password  }
+          - {  property: nom  }
+          - {  property: prenom }
+          - {  property: email  }
+          - {  property: telephone  }
+          - {  property: dateNaissance, type: birthday }
+          - {  property: adresse  }
+          - {  property: codePostal  }
+          - {  property: ville  }
+    Classe:
+      class: App\Entity\Classe
+      list:
+        fields:
+          - {  property: nomClasse  }
+          - {  property: etablissement  }
+          - {  property: EmploiDuTemps  }
+      form:
+        fields:
+          - {  property: nomClasse  }
+          - {  property: etablissement  }
+          - {  property: EmploiDuTemps  }
+    EmploiDuTemps:
+      class: App\Entity\EmploiDuTemps
+      label: Emploi du Temps
+      list:
+        fields:
+          - {  property: nom  }
+          - {  property: classes  }
+      # form:
+      #   fields:
+    Matiere:
+      class: App\Entity\Matiere
+      list:
+        fields:
+          - {  property: nomMatiere  }
+          - {  property: horaire  }
+      form:
+        fields:
+          - {  property: nomMatiere  }
+          - {  property: horaire  }
+    Horaire:
+      class: App\Entity\Horaire
+      list:
+        fields:
+          - {  property: jour  }
+          - {  property: heureDebut  }
+          - {  property: heureFin  }
+          - {  property: matieres, type_options: {  by_reference: false  } }
+      form:
+        fields:
+          - {  property: jour  }
+          - {  property: heureDebut  }
+          - {  property: heureFin  }
+          - {  property: matieres  }

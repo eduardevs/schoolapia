@@ -77,11 +77,6 @@ class User implements UserInterface
     private $ville;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $role;
-
-    /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="utilisateurs")
      */
     private $notes;
@@ -106,6 +101,8 @@ class User implements UserInterface
      */
     private $classes;
     
+    private $roleDisplay = "";
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -125,6 +122,21 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * Get the value of roleDisplay
+     */ 
+    public function getRoleDisplay()
+    {
+        if(in_array("ROLE_SUPER_ADMIN", $this->roles)){
+            return "SuperAdmin";
+        }elseif(!in_array("ROLE_SUPER_ADMIN", $this->roles) && in_array("ROLE_ADMIN", $this->roles)){
+            return "Admin";
+        }elseif(!in_array("ROLE_SUPER_ADMIN", $this->roles) && !in_array("ROLE_ADMIN", $this->roles)){
+            return "User";
+        }
+        return "On a un problème Houston";
     }
 
     /**
@@ -282,18 +294,6 @@ class User implements UserInterface
     public function setVille(?string $ville): self
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }

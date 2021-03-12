@@ -20,33 +20,34 @@ class EmploiDuTemps
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $heureDebut;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $heureFin;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $jour;
-
-    /**
      * @ORM\OneToOne(targetEntity=Classe::class, mappedBy="EmploiDuTemps", cascade={"persist", "remove"})
      */
     private $classes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Matiere::class, inversedBy="emploiDuTemps")
+     * @ORM\Column(type="string", length=255)
      */
-    private $matiere;
+    private $nom;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="emploiDuTemps")
+     */
+    private $matieres;
+
+
 
     public function __construct()
     {
         $this->matiere = new ArrayCollection();
+        $this->matieres = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if (is_null($this->nom)) {
+            return "";
+        }
+        return $this->nom;
     }
 
     public function getId(): ?int
@@ -54,44 +55,9 @@ class EmploiDuTemps
         return $this->id;
     }
 
-    public function getHeureDebut(): ?\DateTimeInterface
+    public function getClasses()
     {
-        return $this->heureDebut;
-    }
-
-    public function setHeureDebut(\DateTimeInterface $heureDebut): self
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    public function getHeureFin(): ?\DateTimeInterface
-    {
-        return $this->heureFin;
-    }
-
-    public function setHeureFin(\DateTimeInterface $heureFin): self
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    public function getJour(): ?\DateTimeInterface
-    {
-        return $this->jour;
-    }
-
-    public function setJour(\DateTimeInterface $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
-
-    public function getClasses(): ?Classe
-    {
+        if(is_null($this->classes)) return "Pas de classe.";
         return $this->classes;
     }
 
@@ -112,27 +78,43 @@ class EmploiDuTemps
         return $this;
     }
 
-    /**
-     * @return Collection|matiere[]
-     */
-    public function getMatiere(): Collection
+    public function getNom(): ?string
     {
-        return $this->matiere;
+        return $this->nom;
     }
 
-    public function addMatiere(matiere $matiere): self
+    public function setNom(string $nom): self
     {
-        if (!$this->matiere->contains($matiere)) {
-            $this->matiere[] = $matiere;
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Matiere[]
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matiere $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres[] = $matiere;
+            $matiere->addEmploiDuTemp($this);
         }
 
         return $this;
     }
 
-    public function removeMatiere(matiere $matiere): self
+    public function removeMatiere(Matiere $matiere): self
     {
-        $this->matiere->removeElement($matiere);
+        if ($this->matieres->removeElement($matiere)) {
+            $matiere->removeEmploiDuTemp($this);
+        }
 
         return $this;
     }
+
 }

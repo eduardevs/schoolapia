@@ -25,19 +25,35 @@ class Matiere
     private $nomMatiere;
 
     /**
-     * @ORM\ManyToMany(targetEntity=EmploiDuTemps::class, mappedBy="matiere")
-     */
-    private $emploiDuTemps;
-
-    /**
      * @ORM\OneToMany(targetEntity=Evaluation::class, mappedBy="matiere")
      */
     private $evaluations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Horaire::class, inversedBy="matieres")
+     */
+    private $horaire;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=EmploiDuTemps::class, inversedBy="matieres")
+     */
+    private $emploiDuTemps;
+
+    
 
     public function __construct()
     {
         $this->emploiDuTemps = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
+        $this->horaire = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if(is_null($this->nomMatiere)){
+            return "";
+        }
+        return $this->nomMatiere;
     }
 
     public function getId(): ?int
@@ -53,33 +69,6 @@ class Matiere
     public function setNomMatiere(string $nomMatiere): self
     {
         $this->nomMatiere = $nomMatiere;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|EmploiDuTemps[]
-     */
-    public function getEmploiDuTemps(): Collection
-    {
-        return $this->emploiDuTemps;
-    }
-
-    public function addEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
-    {
-        if (!$this->emploiDuTemps->contains($emploiDuTemp)) {
-            $this->emploiDuTemps[] = $emploiDuTemp;
-            $emploiDuTemp->addMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
-    {
-        if ($this->emploiDuTemps->removeElement($emploiDuTemp)) {
-            $emploiDuTemp->removeMatiere($this);
-        }
 
         return $this;
     }
@@ -110,6 +99,54 @@ class Matiere
                 $evaluation->setMatiere(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Horaire[]
+     */
+    public function getHoraire(): Collection
+    {
+        return $this->horaire;
+    }
+
+    public function addHoraire(Horaire $horaire): self
+    {
+        if (!$this->horaire->contains($horaire)) {
+            $this->horaire[] = $horaire;
+        }
+
+        return $this;
+    }
+
+    public function removeHoraire(Horaire $horaire): self
+    {
+        $this->horaire->removeElement($horaire);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmploiDuTemps[]
+     */
+    public function getEmploiDuTemps(): Collection
+    {
+        return $this->emploiDuTemps;
+    }
+
+    public function addEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
+    {
+        if (!$this->emploiDuTemps->contains($emploiDuTemp)) {
+            $this->emploiDuTemps[] = $emploiDuTemp;
+        }
+
+        return $this;
+    }
+
+    public function removeEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
+    {
+        $this->emploiDuTemps->removeElement($emploiDuTemp);
 
         return $this;
     }
