@@ -26,7 +26,7 @@ class Classe
     private $nomClasse;
 
     /**
-     * @ORM\ManyToOne(targetEntity=etablissement::class, inversedBy="classes")
+     * @ORM\ManyToOne(targetEntity=Etablissement::class, inversedBy="classes")
      */
     private $etablissement;
 

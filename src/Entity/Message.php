@@ -43,15 +43,15 @@ class Message
      */
     private $discussions;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="envoyeurs")
-     */
-    private $envoyeur;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=User::class, inversedBy="envoyeurs", cascade={"persist", "remove"})
+    //  */
+    // private $envoyeur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receveurs")
-     */
-    private $receveur;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receveurs", cascade={"persist", "remove"})
+    //  */
+    // private $receveur;
 
     public function getId(): ?int
     {

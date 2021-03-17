@@ -77,12 +77,12 @@ class User implements UserInterface
     private $ville;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="utilisateurs")
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="utilisateurs", cascade={"persist", "remove"})
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Discussion::class, mappedBy="utilisateurs")
+     * @ORM\ManyToMany(targetEntity=Discussion::class, mappedBy="users")
      */
     private $discussions;
 
@@ -97,7 +97,7 @@ class User implements UserInterface
     private $receveurs;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="utilisateurs")
+     * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="utilisateurs", cascade={"persist", "remove"})
      */
     private $classes;
     
@@ -113,10 +113,10 @@ class User implements UserInterface
 
     public function __toString()
     {
-        if(is_null($this->roles)){
-            return "";
-        }
-        return $this->roles;
+        // if(is_null($this->prenom) && is_null($this->nom)){
+        //     return $this->email;
+        // }
+        return $this->prenom.'  '.$this->nom;
     }
 
     public function getId(): ?int
@@ -185,10 +185,14 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        global $kernel;
+        if (method_exists($kernel, 'getKernel'))
+            $kernel = $kernel->getKernel();
 
+        $this->password = $kernel->getContainer()->get('security.password_encoder')->encodePassword($this, $password);
         return $this;
     }
+
 
     /**
      * Returning a salt is only needed, if you are not using a modern

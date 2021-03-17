@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ actualite.titre }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand">    
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('actualites')}}">Actualités <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('actualites-archives')}}">Archives</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- FIN NAVBAR -->
+</div>
+<div class="container shadow text-break pt-2 bg-white">
+    <div class="row actu-detail">
+        <div class="col-12">
+            <h2 class="">{{ actualite.titre|upper }}</h2>
+            <p class=""> {{actualite.soustitre|raw}} </p>
+        </div>
+        <div class="col-12 col-md-6 order-2 order-md-1">
+            <a href="{{ path('actualite-detail', {'slug': actualite.id})}}">
+                <img src="{{asset('upload/images/' ~ actualite.image)}}" alt="" class="mt-2 mb-2 img-fluid">
+            </a>
+        </div>
+        <div class="col-12 order-1 order-md-2">
+            <p class=""> {{actualite.texte|raw}} </p>
+        </div>
+    </div>
+
+{% endblock %}

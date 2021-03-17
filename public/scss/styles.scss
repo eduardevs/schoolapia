@@ -1,0 +1,99 @@
+// NAVBAR
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='rgba(24, 24, 27, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+}
+
+.navbar .navbar-toggler {
+  border-color: rgb(24, 24, 27);
+}
+.navbar-toggler {
+  border: 2px solid transparent;
+}
+// CAROUSEL
+
+.carousel-item img{
+    width: 1000px;
+    max-width:100%;
+    max-height: 500px;
+}
+
+body {
+    background-color: rgb(247, 247, 248);
+    color: rgb(24, 24, 27);
+  }
+
+  a  {
+    color: rgb(24, 24, 27);
+  }
+
+  a:hover  {
+    color: red;
+  }
+
+  // SCOLARITE NOTE
+
+  .table{
+    color: rgb(24, 24, 27);
+  }
+
+  // MODE DARK
+
+  .dark-mode {
+    background-color: rgb(24, 24, 27);
+    color: rgb(247, 247, 248);
+  }
+
+  .dark-mode a {
+    color: rgb(247, 247, 248);
+  }
+
+  .dark-mode a:hover  {
+    color: red;
+  }
+
+  .dark-mode .actu-detail{
+      color: rgb(24, 24, 24);
+  }
+
+  .dark-mode .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='rgba(247, 247, 248, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+  }
+
+  .dark-mode .navbar .navbar-toggler {
+    border-color: rgb(247, 247, 248);
+  }
+
+  .dark-mode .table{
+    color: rgb(247, 247, 248);
+  }
+  // PAGE DE CONNEXION
+.bloc-position {
+  margin-top: 80px;
+}
+
+#bloc-login {
+  width: 300px;
+}
+
+.form-width {
+  width: 50%;
+}
+
+#bloc-login .btn-secondary {
+  color: #fff;
+
+  // border-color: #343a40;
+  width: 100%;
+
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #667a8f;
+  border-color: #1d2124;
+  border-color: #667a8f;
+}
+
+.form-group h1 {
+  font-weight: 600;
+}

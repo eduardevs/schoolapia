@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand">    
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('actualites')}}">Actualités <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('actualites-archives')}}">Archives</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- FIN NAVBAR -->
+</div>
+<div class="container">
+    <div class="container row">
+        {% for actualite in actualites %}
+        <div class="col-12 col-md-4 text-break">
+            {% if loop.index <= 6 %}
+            <h2 class="titre-collection">{{ actualite.titre|upper }}</h2>
+            <a href="{{ path('actualite-detail', {'slug': actualite.id})}}">
+                <img src="{{ asset('/upload/images/' ~ actualite.image )}}" alt="" class="img-fluid">
+            </a>
+            <p class="">{{ actualite.soustitre|raw }}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

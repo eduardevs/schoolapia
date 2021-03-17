@@ -33,9 +33,19 @@ class Note
     private $evaluations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="notes", cascade={"persist"})
      */
     private $utilisateurs;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nomNote;
+
+    public function __toString()
+    {
+        return $this->nomNote;
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +96,18 @@ class Note
     public function setUtilisateurs(?User $utilisateurs): self
     {
         $this->utilisateurs = $utilisateurs;
+
+        return $this;
+    }
+
+    public function getNomNote(): ?string
+    {
+        return $this->nomNote;
+    }
+
+    public function setNomNote(string $nomNote): self
+    {
+        $this->nomNote = $nomNote;
 
         return $this;
     }

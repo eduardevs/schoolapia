@@ -6,6 +6,7 @@ use App\Repository\MatiereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 
 /**
  * @ORM\Entity(repositoryClass=MatiereRepository::class)
@@ -35,11 +36,24 @@ class Matiere
     private $horaire;
 
     /**
-     * @ORM\ManyToMany(targetEntity=EmploiDuTemps::class, inversedBy="matieres")
+     * @ORM\ManyToMany(targetEntity=EmploiDuTemps::class, inversedBy="matieres", cascade={"persist"})
      */
     private $emploiDuTemps;
 
-    
+        /**
+     * @ORM\Column(type="string", length=7, nullable=true)
+     */
+    private $backgroundColor;
+
+    /**
+     * @ORM\Column(type="string", length=7, nullable=true)
+     */
+    private $borderColor;
+
+    /**
+     * @ORM\Column(type="string", length=7, nullable=true)
+     */
+    private $textColor;
 
     public function __construct()
     {
@@ -147,6 +161,42 @@ class Matiere
     public function removeEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
     {
         $this->emploiDuTemps->removeElement($emploiDuTemp);
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
+    }
+
+    public function setBackgroundColor(string $backgroundColor): self
+    {
+        $this->backgroundColor = $backgroundColor;
+
+        return $this;
+    }
+
+    public function getBorderColor(): ?string
+    {
+        return $this->borderColor;
+    }
+
+    public function setBorderColor(string $borderColor): self
+    {
+        $this->borderColor = $borderColor;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->textColor;
+    }
+
+    public function setTextColor(string $textColor): self
+    {
+        $this->textColor = $textColor;
 
         return $this;
     }

@@ -8,139 +8,207 @@ easy_admin:
       - "@EasyAdmin/form/bootstrap_4.html.twig"
       - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
     menu:
-      -
-        label: Home
+      - label: Home
         icon: home
         children:
           - { entity: Etablissement, icon: university }
           - { entity: Carousel, icon: picture-o }
-      - 
-        label: Actualités
+      - label: Actualités
         icon: newspaper-o
         entity: Actualite
-      - 
-        label: Utilisateur
-        icon: users 
+      - label: Utilisateur
+        icon: users
         entity: Utilisateur
-      - 
-        label: Classe
+      - label: Classe
         icon: inbox
         entity: Classe
-      - 
-        label: Création d'un planning
+      - label: Création d'un planning
         icon: graduation-cap
         children:
-          - {  entity: Horaire, icon: clock-o }
-          - {  entity: Matiere, icon: folder  }
-          - {  entity: EmploiDuTemps, label: Emploi du Temps, icon: calendar-check-o  }
+          - { entity: Horaire, icon: clock-o }
+          - { entity: Matiere, icon: folder }
+          - { entity: EmploiDuTemps, label: Emploi du Temps, icon: calendar-check-o}
+      - label: Professeur
+        icon: plus
+        children:
+          - { entity: Evaluation, icon: folder }
+          - { entity: Note, icon: sort-numeric-asc }
   entities:
     Etablissement:
       class: App\Entity\Etablissement
       list:
         fields:
-          - {  property: nomEtablissement  }
-          - {  property: image, type: image, base_path: '%app.path.upload_image%'  }
-          - {  property: ville   }
-          - {  property: codePostal  }
+          - { property: nomEtablissement }
+          - {
+              property: image,
+              type: image,
+              base_path: "%app.path.upload_image%",
+            }
+          - { property: ville }
+          - { property: codePostal }
       form:
         fields:
-          - {  type: group, label: 'Contents', icon: pencil  }
-          - {  property: nomEtablissement  }
-          - {  property: adresse  }
-          - {  property: codePostal  }
-          - {  property: ville  }
-          - {  property: imageFile, type: vich_image  }
+          - { type: group, label: "Contents", icon: pencil }
+          - { property: nomEtablissement }
+          - { property: adresse }
+          - { property: codePostal }
+          - { property: ville }
+          - { property: imageFile, type: vich_image }
     Carousel:
       class: App\Entity\Carousel
       list:
         fields:
-          - {  property: active  }
-          - {  property: actualites  }
+          - { property: active }
+          - { property: actualites }
       form:
         fields:
-          - {  type: group, label: "Settings", icon: cog }
-          - {  property: active  }
-          - {  property: actualites, type_options: {by_reference: false}  }
+          - { type: group, label: "Settings", icon: cog }
+          - { property: active }
+          - { property: actualites, type_options: { by_reference: false } }
     Actualite:
       class: App\Entity\Actualite
       list:
         fields:
-          - {  property: titre  }
-          - {  property: soustitre   }
-          - {  property: image, type: image, base_path: '%app.path.upload_image%'  }
+          - { property: rank }
+          - { property: titre }
+          - { property: soustitre }
+          - {
+              property: image,
+              type: image,
+              base_path: "%app.path.upload_image%",
+            }
       form:
         fields:
-          - {  type: group, label: 'Contents', icon: pencil  }
-          - {  property: titre  }
-          - {  property: soustitre  }
-          - {  property: texte, type: 'fos_ckeditor'  }
-          - {  property: imageFile, type: vich_image  }
+          - { type: group, label: "Contents", icon: pencil }
+          - { property: rank }
+          - { property: titre }
+          - { property: soustitre }
+          - { property: texte, type: "fos_ckeditor" }
+          - { property: imageFile, type: vich_image }
     Utilisateur:
       class: App\Entity\User
       list:
         fields:
-          - {  property: roleDisplay, label: "Rôle"  }
-          - {  property: username, label: 'Identifiant'  }
-          - {  property: nom   }
-          - {  property: prenom  }
-          - {  property: dateNaissance }
-          - {  property: email  }
-          - {  property: telephone  }
+          - { property: roleDisplay, label: "Rôle" }
+          - { property: username, label: "Identifiant" }
+          - { property: nom }
+          - { property: prenom }
+          - { property: dateNaissance }
+          - { property: email }
+          - { property: telephone }
+          - { property: classes, type_options: { by_reference: false } }
       form:
         fields:
-          - {  property: roles, label: Rôles, type: choice, type_options: { expanded: true, multiple: true, choices: { Professeur: ROLE_ADMIN, Eleve: ROLE_USER, Parents: ROLE_USER, Super Administrateur: ROLE_SUPER_ADMIN } } }
-          - {  property: username  }
-          - {  property: password  }
-          - {  property: nom  }
-          - {  property: prenom }
-          - {  property: email  }
-          - {  property: telephone  }
-          - {  property: dateNaissance, type: birthday }
-          - {  property: adresse  }
-          - {  property: codePostal  }
-          - {  property: ville  }
+          - {
+              property: roles,
+              label: Rôles,
+              type: choice,
+              type_options:
+                {
+                  expanded: true,
+                  multiple: true,
+                  choices:
+                    {
+                      Professeur: ROLE_ADMIN,
+                      Eleve: ROLE_USER,
+                      Parents: ROLE_USER,
+                      Super Administrateur: ROLE_SUPER_ADMIN,
+                    },
+                },
+            }
+          - { property: username }
+          - { property: password }
+          - { property: nom }
+          - { property: prenom }
+          - { property: email }
+          - { property: telephone }
+          - { property: dateNaissance, type: birthday }
+          - { property: adresse }
+          - { property: codePostal }
+          - { property: ville }
+          - { property: classes, type_options: { by_reference: false } }
     Classe:
       class: App\Entity\Classe
       list:
         fields:
-          - {  property: nomClasse  }
-          - {  property: etablissement  }
-          - {  property: EmploiDuTemps  }
+          - { property: nomClasse }
+          - { property: etablissement }
+          - { property: EmploiDuTemps }
+          - { property: utilisateurs }
       form:
         fields:
-          - {  property: nomClasse  }
-          - {  property: etablissement  }
-          - {  property: EmploiDuTemps  }
+          - { property: nomClasse }
+          - { property: etablissement }
+          - { property: EmploiDuTemps }
+          - { property: utilisateurs }
     EmploiDuTemps:
       class: App\Entity\EmploiDuTemps
       label: Emploi du Temps
       list:
         fields:
-          - {  property: nom  }
-          - {  property: classes  }
-      # form:
-      #   fields:
+          - { property: nom }
+          - { property: classes }
+          - { property: matieres }
+      form:
+        fields:
+          - { property: nom }
+          - { property: classes }
+          - { property: matieres, type_options: { by_reference: false } }
     Matiere:
       class: App\Entity\Matiere
       list:
         fields:
-          - {  property: nomMatiere  }
-          - {  property: horaire  }
+          - { property: nomMatiere }
+          - { property: horaire, type_options: { by_reference: false } }
+          - { property: emploiDuTemps }
+          - { property: borderColor }
+          - { property: backgroundColor }
+          - { property: textColor }
       form:
         fields:
-          - {  property: nomMatiere  }
-          - {  property: horaire  }
+          - { property: nomMatiere }
+          - { property: horaire, type_options: { by_reference: false } }
+          - { property: emploiDuTemps }
+          - { property: borderColor }
+          - { property: backgroundColor }
+          - { property: textColor }
     Horaire:
       class: App\Entity\Horaire
       list:
         fields:
-          - {  property: jour  }
-          - {  property: heureDebut  }
-          - {  property: heureFin  }
-          - {  property: matieres, type_options: {  by_reference: false  } }
+          - { property: jour, format: "d/m/Y" }
+          - { property: heureDebut }
+          - { property: heureFin }
+          - { property: matieres, type_options: { by_reference: false } }
       form:
         fields:
-          - {  property: jour  }
-          - {  property: heureDebut  }
-          - {  property: heureFin  }
-          - {  property: matieres  }
+          - { property: jour, type: birthday }
+          - { property: heureDebut }
+          - { property: heureFin }
+          - { property: matieres, type_options: { by_reference: false } }
+    Evaluation:
+      class: App\Entity\Evaluation
+      list:
+        fields:
+          - { property: nomEvaluation}
+          - { property: matiere }
+          - { property: fichier, type: file, base_path: "%app.path.upload_files%"}
+      form:
+        fields:
+          - { property: nomEvaluation}
+          - { property: matiere }
+          - { property: fichierFile, type: 'vich_file', type_options: { required: true } }
+    Note:
+      class: App\Entity\Note
+      list:
+          fields:
+          - { property: evaluations }
+          - { property: note }
+          - { property: utilisateurs}
+      form:
+        fields:
+          - { property: evaluations }
+          - { property: utilisateurs}
+          - { property: note }
+          - { property: appreciations }
+          - { property: evaluations }

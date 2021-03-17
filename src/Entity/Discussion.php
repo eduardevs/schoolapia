@@ -21,19 +21,19 @@ class Discussion
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=message::class, mappedBy="discussions")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="discussions")
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="discussions")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="discussions", cascade={"persist", "remove"})
      */
-    private $Users;
+    private $users;
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->Users = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,21 +76,21 @@ class Discussion
      */
     public function getUsers(): Collection
     {
-        return $this->Users;
+        return $this->users;
     }
 
-    public function addUser(User $User): self
+    public function addUser(User $user): self
     {
-        if (!$this->Users->contains($User)) {
-            $this->Users[] = $User;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
         }
 
         return $this;
     }
 
-    public function removeUser(User $User): self
+    public function removeUser(User $user): self
     {
-        $this->Users->removeElement($User);
+        $this->users->removeElement($user);
 
         return $this;
     }

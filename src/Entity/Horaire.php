@@ -39,6 +39,11 @@ class Horaire
      */
     private $matieres;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $nom;
+
     public function __construct()
     {
         $this->matieres = new ArrayCollection();
@@ -46,10 +51,10 @@ class Horaire
 
     public function __toString()
     {
-        if(is_null($this->matieres)){
-            return "";
-        }
-        return $this->matieres;
+        // if(is_null($this->nom)){
+        //     return "";
+        // }
+        return $this->heureDebut->format('H:i').' '.$this->heureFin->format('H:i') ;
     }
 
     public function getId(): ?int
@@ -120,5 +125,15 @@ class Horaire
         return $this;
     }
 
-   
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
 }

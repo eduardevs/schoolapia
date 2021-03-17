@@ -59,6 +59,12 @@ class Actualite
      */
     private $carousels;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rank;
+
+
 
     public function __construct()
     {
@@ -164,4 +170,17 @@ class Actualite
 
         return $this;
     }
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(int $rank): self
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
 }

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <nav class="navbar navbar-expand">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('parametres')}}">Mon Compte <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container py-3">
+
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-info">{{  message  }}</div>
+    {% endfor %}
+    <div class="col-12">
+        <fieldset disabled>
+            <div class="row mt-3">
+                <legend class="m-3">Mes données personnelles :</legend>
+                <div class="form-group col-12 col-md-6">
+                    <label for="disabledTextInput">Nom :</label>
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ user.nom }}">
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    <label for="">Prenom :</label>
+                    <input type="text" id="" class="form-control" placeholder="{{ user.prenom }}">
+                </div>
+                <div class="w-100"></div>
+                <div class="form-group col-12 col-md-6">
+                    <label for="">Username :</label>
+                    <input type="text" id="" class="form-control" placeholder="{{ user.username }}">
+                </div>
+            </div>
+        </fieldset>
+        {{ form_start(form)}}
+        <div class="row">
+            <legend class="mt-4 m-3">Mes données à modifier :</legend>
+            <div class="form-group">
+                {# {{ form_label(form.dateNaissance) }}
+                {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control col-12', 'placeholder': 'date de
+                naissance'} }) }}#}
+            </div>
+            <div class="form-group col-6">
+                {{ form_label(form.adresse) }}
+                {{ form_widget(form.adresse, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre Adresse'}
+                }) }}
+            </div>
+            <div class="form-group col-3">
+                {{ form_label(form.ville) }}
+                {{ form_widget(form.ville, {'attr': {'class': 'form-control col-12', 'placeholder': 'Ville'} }) }}
+            </div>
+            <div class="form-group col-3">
+                {{ form_label(form.codePostal) }}
+                {{ form_widget(form.codePostal, {'attr': {'class': 'form-control col-12', 'placeholder': 'Code Postal'}
+                })
+                }}
+            </div>
+            <div class="form-group col-6">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre email'} }) }}
+            </div>
+            <div class="form-group col-6">
+                {{ form_label(form.telephone) }}
+                {{ form_widget(form.telephone, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre n° de téléphone'} }) }}
+            </div>
+
+            <div class="form-group col-6">
+                <label for="newPassword">Mot de passe</label>
+                <input type="password" name="newPassword" id="newPassword" placeholder="Nouveau mot de passe"
+                    class="form-control col-12">
+            </div>
+            <div class="w-100"></div>
+            <button type="submit" class="btn btn-dark mt-2 ml-3">Modifier</button>
+            {{ form_row(form._token) }}
+
+            {{ form_end(form, { render_rest: false }) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

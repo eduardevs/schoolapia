@@ -30,7 +30,7 @@ class EmploiDuTemps
     private $nom;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="emploiDuTemps")
+     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="emploiDuTemps", cascade={"persist"})
      */
     private $matieres;
 

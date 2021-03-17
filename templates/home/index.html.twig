@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur notre site{% endblock %}
+
+{% block body %}
+<div class="container-fluid pt-3">
+    <!-- CAROUSEL -->
+    <div class="row">
+        <div id="carousel-home" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for actu in carousel.actualites %}
+                {% if loop.index == 1 %}
+                <li data-target="#carousel-home" data-slide-to="{{ loop.index }}" class="active"></li>
+                {% else %}
+                <li data-target="#carousel-home" data-slide-to="{{ loop.index }}"></li>
+                {% endif %}
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for actu in carousel.actualites %}
+                {% if loop.index == 1 %}
+                <div class="carousel-item active">
+                {% else %}
+                <div class="carousel-item">        
+                {% endif %}
+                <a href="{{ path('actualite-detail', {'slug': actu.id})}}">
+                    <!-- On utilise asset pour pointer le répertoire "public" on concatène pour récupérer l'image avec ~ qui vaut un + -->
+                    <img src="{{asset('upload/images/' ~ actu.image)}}" class="d-block w-100 img-fluid" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        {% if actu.titre is defined and actu.titre is not null %}<h5> {{actu.titre}} </h5>
+                        {% endif %}
+                        {% if actu.soustitre is defined and actu.soustitre is not null %}<p>{{actu.soustitre}}
+                        </p>{% endif %}
+                    </div>
+                </a>
+                </div>
+                {% endfor %}
+            </div>
+                <a class="carousel-control-prev" href="#carousel-home" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-home" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!-- FIN CAROUSEL -->
+    </div>
+    <div class="row col-12">
+        <div id="emploidutemps2"></div>
+    </div>
+</div>
+{% endblock %}

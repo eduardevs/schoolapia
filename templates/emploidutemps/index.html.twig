@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EmploiDuTempsController!{% endblock %}
+
+
+{% block body %}
+<div class="container py-5 ">
+    <div id="emploidutemps2"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var calendarEl = document.getElementById('emploidutemps2');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            defaultView: 'timeGridWeek',
+            minTime: '8:30',
+            maxTime: '18:30',
+            allDaySlot: false,
+            slotDurationMaxTime: "18:30:00", 
+            locale: 'fr',
+            editable: true,
+            eventSources: [
+                {
+                    url: "/fc-load-events",
+                    method: "POST",
+                    extraParams: {
+                        filters: JSON.stringify({ id: '{{app.user.classes.id}}' })
+                    },
+                    failure: () => {
+                        // alert("There was an error while fetching FullCalendar!");
+                    },
+                },
+            ],
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            },
+            plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+            timeZone: 'Europe/Paris',
+        });
+        calendar.render();
+    });
+</script>
+{% endblock %}

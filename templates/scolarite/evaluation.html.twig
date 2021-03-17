@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scolarité - Note{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('note')}}">Note</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('evaluation')}}">Evaluations <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+    <!-- FIN NAVBAR -->
+
+    <div class="container">
+        <!-- TABLEAU NOTE -->
+        <table class="table table-note">
+            <thead>
+                <tr>
+                    <th scope="col">Matières</th>
+                    <th scope="col">Evaluations</th>
+                    <th scope="col">Documents</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation.matiere.nomMatiere}}</td>
+                    <td>{{ evaluation }}</td>
+                    <td><a href="{{ asset('upload/files/' ~ evaluation.fichier) }}">PDF</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table></div>
+
+{% endblock %}

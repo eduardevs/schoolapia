@@ -66,6 +66,11 @@ class Etablissement
      */
     private $classes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->updatedAt = new \DateTimeImmutable();
@@ -165,6 +170,18 @@ class Etablissement
     public function setVille(string $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

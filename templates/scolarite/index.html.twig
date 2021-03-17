@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scolarité - Note{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('note')}}">Note <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('evaluation')}}">Evaluations</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+    <!-- FIN NAVBAR -->
+<div class="container">
+    <!-- TABLEAU NOTE -->
+    <table class="table table-note">
+        <thead>
+            <tr>
+                <th scope="col">Matières</th>
+                <th scope="col">Evaluations</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Appreciations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+            <tr>
+                <td>{{ note.evaluations.matiere.nomMatiere}}</td>
+                <td>{{ note.evaluations }}</td>
+                <td>{{ note.note }}</td>
+                <td class="text-break">{{ note.appreciations }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table></div>
+
+{% endblock %}
