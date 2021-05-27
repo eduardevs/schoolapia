@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    
+    <h6>Message envoyé par : </h6>
+    <div class="cont-destin col-12">
+        <p>  {{ message.sender }}</p>
+    </div>
+    <h6>Sujet : </h6>
+    <div class="cont-destin col-12">
+        <p> {{ message.sujet }}</p>
+    </div>
+    <h6>Message : </h6>
+    <div class="container-message col-12">
+        <p> {{ message.contenu }}</p>
+
+    </div>
+    <h5>Votre réponse : </h5>
+    <!-- Le code twig ci-dessous rend le formulaire dans son intégralité sans aucun contrôle du dev -->
+    {#{{ form(form) }}#}
+    {{ form_start(form) }}
+    <!-- BUG SANS RESOUDRE -->
+    <input type="hidden" name="{#{{ form.sender }}#}">
+    <div class="form-group">
+        {# form_row en twig permet d'assurer le rendu d'un propriété dans le formulaire en incluant le label #}
+        {# {{ form_row(form.email) }}#}
+        {# form_widget ne prend en charge que le rendu du champ (sans le label) #}
+        {{ form_label(form.sujet) }}
+        {{ form_widget(form.sujet, {'attr': {'class': 'form-control', 'placeholder': 'Sujet du message'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.contenu) }}
+        {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Votre message', 'rows':'8'} })
+        }}
+    </div>
+    <button type="submit" class="btn btn-dark">Envoyer</button>
+    {# Dans la mesure ou l'on crée le formulaire à la main ET SURTOUT qu'on active render_rest à false il faut penser à
+    générer un token (signature, empreinte) de formulaire pour que la sécurité de Symfony accepte le traitement et
+    l'enregistrement des données #}
+    {{ form_row(form._token) }}
+    <!-- render_rest permet d demander à Twig de ne pas afficher les champs du FormType (ContactType) qui n'ont pas été pris en charge à la main dans les lignes du dessus -->
+    {{ form_end(form, {'render_rest':false }) }}
+</div>
+{% endblock %}

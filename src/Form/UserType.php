@@ -26,7 +26,7 @@ class UserType extends AbstractType
             ->add('codePostal')
             ->add('ville')
             ->remove('discussions')
-            ->remove('classes')
+            ->add('classes')
         ;
     }
 

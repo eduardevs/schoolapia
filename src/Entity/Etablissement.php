@@ -8,12 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Serializable;
 
 /**
  * @ORM\Entity(repositoryClass=EtablissementRepository::class)
  * @Vich\Uploadable
  */
-class Etablissement
+class Etablissement implements Serializable
 {
     /**
      * @ORM\Id
@@ -80,6 +81,20 @@ class Etablissement
     {
         return $this->nomEtablissement;
     }
+    // On implémente la méthode de l'interface Serialize pour prendre en charge la "convertion" des données nom BDD comme des fichiers sous la forme d'une chaine de caractère
+    public function serialize()
+    {
+        // On converti le fichier image en base64 (représentation d'une image sous forme de chaine de caractères)
+        $this->imageFile = base64_encode($this->imageFile);
+    }
+    public function unserialize($serialized)
+    {
+        // À l'inverse, on converti la base64 en fichier image
+        $this->imageFile = base64_decode($serialized);
+    }
+
+
+
 
     public function getId(): ?int
     {

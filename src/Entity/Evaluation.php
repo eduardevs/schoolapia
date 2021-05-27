@@ -2,18 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\EvaluationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Serializable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EvaluationRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=EvaluationRepository::class)
  * @Vich\Uploadable
  */
-class Evaluation
+class Evaluation implements Serializable
 {
     /**
      * @ORM\Id
@@ -67,6 +68,27 @@ class Evaluation
         return $this->nomEvaluation;
         return $this->fichier;
     }
+
+    //
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->matiere,
+            $this->nomEvaluation,
+            $this->note
+        ));
+    }
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->matiere,
+            $this->nomEvaluation,
+            $this->note
+        ) = unserialize($serialized);
+    }
+    //
 
     public function getFichier(): ?string
     {

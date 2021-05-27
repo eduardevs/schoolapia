@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Classe;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -100,8 +101,14 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="utilisateurs", cascade={"persist", "remove"})
      */
     private $classes;
-    
+
     private $roleDisplay = "";
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender")
+     */
+    private $messages;
+
 
     public function __construct()
     {
@@ -116,7 +123,7 @@ class User implements UserInterface
         // if(is_null($this->prenom) && is_null($this->nom)){
         //     return $this->email;
         // }
-        return $this->prenom.'  '.$this->nom;
+        return $this->prenom . '  ' . $this->nom;
     }
 
     public function getId(): ?int
@@ -126,14 +133,14 @@ class User implements UserInterface
 
     /**
      * Get the value of roleDisplay
-     */ 
+     */
     public function getRoleDisplay()
     {
-        if(in_array("ROLE_SUPER_ADMIN", $this->roles)){
+        if (in_array("ROLE_SUPER_ADMIN", $this->roles)) {
             return "SuperAdmin";
-        }elseif(!in_array("ROLE_SUPER_ADMIN", $this->roles) && in_array("ROLE_ADMIN", $this->roles)){
+        } elseif (!in_array("ROLE_SUPER_ADMIN", $this->roles) && in_array("ROLE_ADMIN", $this->roles)) {
             return "Admin";
-        }elseif(!in_array("ROLE_SUPER_ADMIN", $this->roles) && !in_array("ROLE_ADMIN", $this->roles)){
+        } elseif (!in_array("ROLE_SUPER_ADMIN", $this->roles) && !in_array("ROLE_ADMIN", $this->roles)) {
             return "User";
         }
         return "On a un problème Houston";
@@ -205,7 +212,7 @@ class User implements UserInterface
         return null;
     }
 
-    
+
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -430,6 +437,37 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): ?Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSender() === $this) {
+                $message->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
 
     /**
      * @see UserInterface

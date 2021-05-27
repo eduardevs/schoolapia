@@ -1,61 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ ecole.nomEtablissement }}{% endblock %}
+{% block title %}{#{ ecole.nomEtablissement }#}{% endblock %}
 
 {% block body %}
 
 <div class="container-fluid">
+
     <header class="zak">
-        <h3 class="text-center m-0">{{ ecole.nomEtablissement }}</h3>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+        {% endif %}
+        <h1 class="text-center m-0">{{ ecole.nomEtablissement }}</h1>
     </header>
     <div class="container-fluid">
-    <div class="row bloc-position justify-content-center ">
-        <div class="col-4 col-md-6 d-flex justify-content-md-end order-md-2 pb-5" id="bloc-image">
-            <img src="{{ asset('/upload/images/'~ ecole.image )}}" alt="" class="img-fluid">
-        </div>
-        <div class="col-10 col-md-6 d-flex justify-content-center order-2" id="bloc-login">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
-            <form method="post" class="form-width text-center">
-                <div class="form-group">
-                    {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    {% if app.user %}
-                    <div class="mb-3">
-                        Vous êtes connecté en tant que {{ app.user.username }}, <a
-                            href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                    {% endif %}
+        <div class="row bloc-position justify-content-center">
+            <div class="col-4 col-md-6 d-flex justify-content-md-end order-md-2 pb-5" id="bloc-image">
+                <img src="{{ asset('/upload/images/'~ ecole.image )}}" alt="" class="img-fluid">
+            </div>
+            <div class="col-10 col-md-6 d-flex justify-content-center order-2" id="bloc-login">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+                <form method="post" class="form-width text-center">
+                    <div class="form-group">
+                        {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                        {% endif %}
+                        {% if app.user %}
+                        <div class="mb-3">
+                            Vous êtes connecté en tant que {{ app.user.username }}, <a
+                                href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                        {% endif %}
 
-                    <h3 class="mb-3">Connexion</h3>
-                    <label for="inputUsername"></label>
-                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
-                        placeholder="Nom d'utilisateur" class="form-control" required autofocus>
-                    <label for="inputPassword"></label>
-                    <input type="password" name="password" id="inputPassword" placeholder="Mot de passe"
-                        class="form-control" required>
+                        <h3 class="mb-3">Connexion</h3>
+                        <label for="inputUsername"></label>
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                            placeholder="Nom d'utilisateur" class="form-control" required autofocus>
+                        <label for="inputPassword"></label>
+                        <input type="password" name="password" id="inputPassword" placeholder="Mot de passe"
+                            class="form-control" required>
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    {#
-                    Uncomment this section and add a remember_me option below your firewall to activate remember me
-                    functionality.
-                    See https://symfony.com/doc/current/security/remember_me.html
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember
+                        me
+                        functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"> Remember me
-                        </label>
-                    </div>
-                    #}
-                    <div class="mt-3">
-                        <button class="btn btn-secondary mr-2 " type="submit">Se connecter</button>
-            </form>
-        </div>
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                        #}
+                        <div class="mt-3">
+                            <button class="btn btn-secondary mr-2 " type="submit">Se connecter</button>
+                </form>
+            </div>
             {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
             <form method="post">
                 <div class="form-group">
                     {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
                     {% endif %}
 
                     {% if app.user %}
@@ -69,5 +75,6 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}

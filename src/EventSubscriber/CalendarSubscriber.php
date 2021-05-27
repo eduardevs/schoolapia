@@ -49,6 +49,9 @@ class CalendarSubscriber implements EventSubscriberInterface
         $classe = $req[0];
         $emploiDuTemps = $classe->getEmploiDuTemps();
         foreach($emploiDuTemps->getMatieres() as $matiere){
+            $bg =  $matiere->getBackgroundColor();
+            $bc =  $matiere->getBorderColor();
+            $tc =  $matiere->getTextColor();
             foreach($matiere->getHoraire() as $horaire){
                 $d = date_format($horaire->getJour(), 'Y-m-d');
                 $hd = date_format($horaire->getHeureDebut(), 'H:i:s');
@@ -60,9 +63,6 @@ class CalendarSubscriber implements EventSubscriberInterface
                     new \DateTime($d.' '.$hf),
                 );
                 //
-                $bg = $this->matiereRepository->getBackgroundColor();
-                $bc = $this->matiereRepository->getBorderColor();
-                $tc = $this->matiereRepository->getTextColor();
                 $horaireEvent->setOptions(['backgroundColor'=>$bg, 'borderColor'=>$bc, 'textColor'=>$tc]);
                 // $horaireEvent->addOption('url', $this->router->generate('horaire_show', ['id'=> $horaire->getId(),]));
                 $calendar->addEvent($horaireEvent);

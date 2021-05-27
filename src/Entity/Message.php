@@ -53,6 +53,12 @@ class Message
     //  */
     // private $receveur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $sender;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,4 +147,18 @@ class Message
 
         return $this;
     }
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): self
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+
 }
+

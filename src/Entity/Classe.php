@@ -8,10 +8,11 @@ use App\Repository\ClasseRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
 /**
  * @ORM\Entity(repositoryClass=ClasseRepository::class)
  */
-class Classe
+class Classe 
 {
     /**
      * @ORM\Id
@@ -36,7 +37,7 @@ class Classe
     private $EmploiDuTemps;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="classes")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="classes", cascade={"persist"})
      */
     private $utilisateurs;
 

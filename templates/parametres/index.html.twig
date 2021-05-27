@@ -3,6 +3,7 @@
 {% block title %}Mon Compte{% endblock %}
 
 {% block body %}
+
 <div class="container-fluid">
     <nav class="navbar navbar-expand">
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -22,7 +23,7 @@
 <div class="container py-3">
 
     {% for message in app.flashes('success') %}
-    <div class="alert alert-info">{{  message  }}</div>
+    <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
     <div class="col-12">
         <fieldset disabled>
@@ -38,6 +39,10 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="form-group col-12 col-md-6">
+                    <label for="">Date de naissance :</label>
+                    <input type="text" id="" class="form-control" placeholder="{{ user.dateNaissance|date('d/m/Y') }}">
+                </div>
+                <div class="form-group col-12 col-md-6">
                     <label for="">Username :</label>
                     <input type="text" id="" class="form-control" placeholder="{{ user.username }}">
                 </div>
@@ -46,11 +51,6 @@
         {{ form_start(form)}}
         <div class="row">
             <legend class="mt-4 m-3">Mes données à modifier :</legend>
-            <div class="form-group">
-                {# {{ form_label(form.dateNaissance) }}
-                {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control col-12', 'placeholder': 'date de
-                naissance'} }) }}#}
-            </div>
             <div class="form-group col-6">
                 {{ form_label(form.adresse) }}
                 {{ form_widget(form.adresse, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre Adresse'}
@@ -72,7 +72,8 @@
             </div>
             <div class="form-group col-6">
                 {{ form_label(form.telephone) }}
-                {{ form_widget(form.telephone, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre n° de téléphone'} }) }}
+                {{ form_widget(form.telephone, {'attr': {'class': 'form-control col-12', 'placeholder': 'Votre n° de
+                téléphone'} }) }}
             </div>
 
             <div class="form-group col-6">

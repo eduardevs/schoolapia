@@ -126,7 +126,8 @@ easy_admin:
           - { property: adresse }
           - { property: codePostal }
           - { property: ville }
-          - { property: classes, type_options: { by_reference: false } }
+          - { property: classes }
+          - { property: messages }
     Classe:
       class: App\Entity\Classe
       list:

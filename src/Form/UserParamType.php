@@ -18,7 +18,7 @@ class UserParamType extends AbstractType
             ->remove('password')
             ->remove('prenom')
             ->remove('nom')
-            ->add('dateNaissance')
+            ->add('dateNaissance', BirthdayType::class)
             ->add('email', EmailType::class) //EmailType::class
             ->add('telephone')
             ->add('adresse')
